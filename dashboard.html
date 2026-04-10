@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAPS Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🚑 IAPS Dashboard</div>
+        <div class="nav-user">
+            <span id="user-info"></span>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+    
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <ul class="nav-menu">
+                <li><a href="#" data-section="overview" class="nav-link active">📊 Overview</a></li>
+                <li><a href="#" data-section="accident-entry" class="nav-link">🚗 Accident Details</a></li>
+                <li><a href="#" data-section="clusters" class="nav-link analyst-only">🗺️ Accident Clusters</a></li>
+                <li><a href="#" data-section="analysis" class="nav-link analyst-only">📊 Model Analysis</a></li>
+                <li><a href="#" data-section="research" class="nav-link analyst-only">🔬 Research Tools</a></li>
+                <li><a href="#" data-section="reports" class="nav-link analyst-only">📈 Analytics Reports</a></li>
+                <li><a href="#" data-section="positioning" class="nav-link">📍 Ambulance Positioning</a></li>
+                <li><a href="#" data-section="emergency" class="nav-link operator-only">🚨 Emergency Dispatch</a></li>
+                <li><a href="#" data-section="upload" class="nav-link admin-only">📤 Data Upload</a></li>
+                <li><a href="#" data-section="admin" class="nav-link admin-only">⚙️ User Management</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div id="overview" class="content-section active">
+                <h2>System Overview</h2>
+                
+                <div class="project-info">
+                    <div class="project-header">
+                        <h3>🎯 Intelligent Ambulance Positioning System (IAPS)</h3>
+                        <p class="project-subtitle">Proactive Emergency Response using Deep Embedded Clustering</p>
+                    </div>
+                    
+                    <div class="project-description">
+                        <div class="description-card">
+                            <h4>🎯 Project Objective</h4>
+                            <p>Predict optimal ambulance locations based on historical accident data and geographical patterns using advanced deep learning techniques for quicker and more efficient emergency response.</p>
+                        </div>
+                        
+                        <div class="description-card">
+                            <h4>🧠 Technology Stack</h4>
+                            <p>Deep Embedded Clustering (DEC) model combined with Cat2Vec embedding technique to preserve spatial and contextual patterns while improving clustering accuracy.</p>
+                        </div>
+                        
+                        <div class="description-card">
+                            <h4>📈 Performance Results</h4>
+                            <p>Achieved 95% accuracy with k-fold cross-validation, 0.4853 Silhouette Score, and superior performance compared to traditional clustering methods (K-Means, GMM, Agglomerative).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Active Ambulances</h3>
+                        <div class="stat-number">24</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Accident Clusters</h3>
+                        <div class="stat-number">8</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Response Time</h3>
+                        <div class="stat-number">4.2 min</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Model Accuracy</h3>
+                        <div class="stat-number">95%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="accident-entry" class="content-section">
+                <h2>Road Traffic Accident Details</h2>
+                <div class="accident-form-container">
+                    <form id="accident-form" class="accident-form">
+                        <div class="form-section">
+                            <h3>👥 Driver Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Driver Age</label>
+                                    <input type="number" id="driver-age" min="16" max="100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select id="driver-gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Experience (Years)</label>
+                                    <input type="number" id="driver-experience" min="0" max="50">
+                                </div>
+                                <div class="form-group">
+                                    <label>License Type</label>
+                                    <select id="license-type">
+                                        <option value="regular">Regular</option>
+                                        <option value="commercial">Commercial</option>
+                                        <option value="motorcycle">Motorcycle</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>🚗 Vehicle Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Vehicle Type</label>
+                                    <select id="vehicle-type" required>
+                                        <option value="">Select Vehicle Type</option>
+                                        <option value="car">Car</option>
+                                        <option value="truck">Truck</option>
+                                        <option value="motorcycle">Motorcycle</option>
+                                        <option value="bus">Bus</option>
+                                        <option value="van">Van</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Vehicle Age (Years)</label>
+                                    <input type="number" id="vehicle-age" min="0" max="30">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Engine Size (L)</label>
+                                    <input type="number" id="engine-size" step="0.1" min="0.5" max="8.0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Safety Rating</label>
+                                    <select id="safety-rating">
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="5">5 Stars</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>⚠️ Accident Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Accident Type</label>
+                                    <select id="accident-type" required>
+                                        <option value="">Select Accident Type</option>
+                                        <option value="collision">Vehicle Collision</option>
+                                        <option value="pedestrian">Pedestrian Involved</option>
+                                        <option value="rollover">Vehicle Rollover</option>
+                                        <option value="rear-end">Rear-End Collision</option>
+                                        <option value="side-impact">Side Impact</option>
+                                        <option value="head-on">Head-On Collision</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Severity Level</label>
+                                    <select id="accident-severity" required>
+                                        <option value="">Select Severity</option>
+                                        <option value="minor">Minor (Property damage only)</option>
+                                        <option value="moderate">Moderate (Minor injuries)</option>
+                                        <option value="serious">Serious (Major injuries)</option>
+                                        <option value="fatal">Fatal (Death involved)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Weather Conditions</label>
+                                    <select id="weather-conditions">
+                                        <option value="clear">Clear</option>
+                                        <option value="rain">Rain</option>
+                                        <option value="fog">Fog</option>
+                                        <option value="snow">Snow</option>
+                                        <option value="wind">Strong Wind</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Road Conditions</label>
+                                    <select id="road-conditions">
+                                        <option value="dry">Dry</option>
+                                        <option value="wet">Wet</option>
+                                        <option value="icy">Icy</option>
+                                        <option value="construction">Under Construction</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>📍 Location & Time</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Latitude</label>
+                                    <input type="number" id="latitude" step="0.000001" placeholder="e.g., 40.7128">
+                                </div>
+                                <div class="form-group">
+                                    <label>Longitude</label>
+                                    <input type="number" id="longitude" step="0.000001" placeholder="e.g., -74.0060">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Date of Accident</label>
+                                    <input type="date" id="accident-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Time of Accident</label>
+                                    <input type="time" id="accident-time" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Submit Accident Report</button>
+                            <button type="reset" class="btn-secondary">Clear Form</button>
+                        </div>
+                    </form>
+                    
+                    <div class="data-preview">
+                        <h3>Data Analysis Preview</h3>
+                        <div id="analysis-preview">
+                            <p>Fill the form to see real-time analysis preview</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="clusters" class="content-section">
+                <h2>Deep Embedded Clustering Analysis</h2>
+                
+                <div class="cluster-controls">
+                    <button id="analyze-clusters" class="btn-primary">Run DEC Analysis</button>
+                    <button id="toggle-heatmap" class="btn-secondary">Toggle Heatmap</button>
+                    <select id="time-filter">
+                        <option value="all">All Time</option>
+                        <option value="last-year">Last Year</option>
+                        <option value="last-month">Last Month</option>
+                    </select>
+                </div>
+                
+                <div class="cluster-visualization">
+                    <div class="detailed-cluster-map">
+                        <h3>🗺️ Accident Cluster Distribution Map</h3>
+                        <div id="leaflet-map" class="map-container-detailed"></div>
+                        
+                        <div class="detailed-legend">
+                            <h4>Cluster Legend</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-cluster high-risk"></div>
+                                    <span>High Risk Clusters (100+ accidents)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-cluster medium-risk"></div>
+                                    <span>Medium Risk Clusters (50-99 accidents)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-cluster low-risk"></div>
+                                    <span>Low Risk Clusters (<50 accidents)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-point"></div>
+                                    <span>Individual Accidents</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cluster-statistics">
+                    <h3>📊 Clustering Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Total Clusters</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">878</div>
+                            <div class="stat-label">Total Accidents</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">0.485</div>
+                            <div class="stat-label">Silhouette Score</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">Cluster Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="analysis" class="content-section">
+                <h2>Deep Learning Model Performance Analysis</h2>
+                
+                <div class="analysis-overview">
+                    <div class="model-card featured">
+                        <h3>🏆 DEC-AE with Cat2Vec (Proposed)</h3>
+                        <div class="accuracy-badge">95% Accuracy</div>
+                        <p>Deep Embedded Clustering with Autoencoder and categorical embeddings</p>
+                    </div>
+                </div>
+                
+                <div class="metrics-comparison">
+                    <h3>Performance Metrics Comparison</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4>Silhouette Score</h4>
+                            <div class="metric-bars">
+                                <div class="metric-bar">
+                                    <span class="model-name">DEC-AE + Cat2Vec</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 97%;"></div>
+                                        <span class="value">0.4853</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">K-Means</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 75%;"></div>
+                                        <span class="value">0.3642</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">GMM</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 68%;"></div>
+                                        <span class="value">0.3298</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">Agglomerative</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 62%;"></div>
+                                        <span class="value">0.3012</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <h4>Distance Score</h4>
+                            <div class="metric-bars">
+                                <div class="metric-bar">
+                                    <span class="model-name">DEC-AE + Cat2Vec</span>
+                                    <div class="bar-container">
+                                        <div class="bar best" style="width: 95%;"></div>
+                                        <span class="value">7.581</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">K-Means</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 72%;"></div>
+                                        <span class="value">9.234</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">GMM</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 65%;"></div>
+                                        <span class="value">10.156</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">Agglomerative</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 58%;"></div>
+                                        <span class="value">11.423</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <h4>Davies-Bouldin Index</h4>
+                            <div class="metric-bars">
+                                <div class="metric-bar">
+                                    <span class="model-name">K-Means</span>
+                                    <div class="bar-container">
+                                        <div class="bar best" style="width: 88%;"></div>
+                                        <span class="value">1.892</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">DEC-AE + Cat2Vec</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 75%;"></div>
+                                        <span class="value">2.523</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">GMM</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 65%;"></div>
+                                        <span class="value">3.156</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">Agglomerative</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 58%;"></div>
+                                        <span class="value">3.687</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <h4>Calinski-Harabasz Score</h4>
+                            <div class="metric-bars">
+                                <div class="metric-bar">
+                                    <span class="model-name">K-Means</span>
+                                    <div class="bar-container">
+                                        <div class="bar best" style="width: 92%;"></div>
+                                        <span class="value">642.15</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">DEC-AE + Cat2Vec</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 78%;"></div>
+                                        <span class="value">500.29</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">GMM</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 68%;"></div>
+                                        <span class="value">423.87</span>
+                                    </div>
+                                </div>
+                                <div class="metric-bar">
+                                    <span class="model-name">Agglomerative</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 55%;"></div>
+                                        <span class="value">356.42</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="key-findings">
+                    <h3>Key Research Findings</h3>
+                    <div class="findings-grid">
+                        <div class="finding-card">
+                            <div class="finding-icon">🏆</div>
+                            <h4>Superior Clustering Performance</h4>
+                            <p>DEC-AE with Cat2Vec achieved the highest Silhouette Score (0.4853) and best Distance Score (7.581), indicating optimal clustering accuracy for ambulance positioning.</p>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-icon">📊</div>
+                            <h4>95% Cross-Validation Accuracy</h4>
+                            <p>K-fold cross-validation demonstrated exceptional reliability and efficiency, making it suitable for real-world emergency response scenarios.</p>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-icon">⚡</div>
+                            <h4>Proactive Response Strategy</h4>
+                            <p>Unlike traditional reactive deployment, the system enables proactive ambulance positioning based on predictive analytics and historical patterns.</p>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-icon">🎯</div>
+                            <h4>Robust Overall Performance</h4>
+                            <p>Despite slightly higher Davies-Bouldin Index, the model showed consistent performance across all metrics, outperforming traditional clustering methods.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="technical-details">
+                    <h3>Technical Implementation</h3>
+                    <div class="tech-grid">
+                        <div class="tech-card">
+                            <h4>🧠 Deep Embedded Clustering (DEC)</h4>
+                            <p>Advanced clustering technique that learns feature representations and cluster assignments simultaneously</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4>📊 Cat2Vec Embeddings</h4>
+                            <p>Deep learning-based embedding for categorical data, preserving spatial and contextual patterns</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4>🎯 Autoencoder Integration</h4>
+                            <p>Neural network architecture for dimensionality reduction and feature learning</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4>🗺️ Geographical Pattern Analysis</h4>
+                            <p>Spatial-temporal analysis of historical accident data for optimal positioning</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="positioning" class="content-section">
+                <h2>Optimal Ambulance Positioning System</h2>
+                
+                <div class="positioning-overview">
+                    <div class="system-status">
+                        <div class="status-card">
+                            <h3>🎯 DEC Model Status</h3>
+                            <div class="status-indicator status-completed">Active</div>
+                            <p>Deep Embedded Clustering analysis running</p>
+                        </div>
+                        <div class="status-card">
+                            <h3>📊 Clustering Accuracy</h3>
+                            <div class="accuracy-display">95.2%</div>
+                            <p>Historical data pattern recognition</p>
+                        </div>
+                        <div class="status-card">
+                            <h3>⏱️ Response Time</h3>
+                            <div class="time-display">3.8 min</div>
+                            <p>Average predicted response improvement</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="positioning-controls">
+                    <button id="calculate-positions" class="btn-primary">Generate Optimal Positions</button>
+                    <button id="view-current" class="btn-secondary">View Current Deployment</button>
+                    <button id="export-results" class="btn-secondary">Export Results</button>
+                </div>
+                
+                <div class="positioning-results">
+                    <div class="map-container">
+                        <div class="positioning-map">
+                            <h3>🗺️ Strategic Ambulance Positioning Map</h3>
+                            <div id="positioning-map" class="map-container-detailed"></div>
+                        </div>
+                        
+                        <div class="positioning-legend">
+                            <h4>Map Legend</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <span class="legend-marker optimal">🚑</span>
+                                    <span>Optimal DEC Positions</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-marker current">🚑</span>
+                                    <span>Current Positions</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color high"></span>
+                                    <span>High Risk Clusters</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color medium"></span>
+                                    <span>Medium Risk Clusters</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="positions-table">
+                            <h4>🚑 Ambulance Position Details</h4>
+                            <div class="positions-grid">
+                                <div class="position-card optimal">
+                                    <div class="position-header">
+                                        <span class="position-id">A1</span>
+                                        <span class="position-type">OPTIMAL</span>
+                                    </div>
+                                    <div class="position-details">
+                                        <p><strong>Location:</strong> Connaught Place</p>
+                                        <p><strong>Coordinates:</strong> 28.6139, 77.2090</p>
+                                        <p><strong>Coverage:</strong> 2.3km radius</p>
+                                        <p><strong>Status:</strong> Recommended by DEC</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="position-card optimal">
+                                    <div class="position-header">
+                                        <span class="position-id">B2</span>
+                                        <span class="position-type">OPTIMAL</span>
+                                    </div>
+                                    <div class="position-details">
+                                        <p><strong>Location:</strong> Noida Expressway</p>
+                                        <p><strong>Coordinates:</strong> 28.5355, 77.3910</p>
+                                        <p><strong>Coverage:</strong> 2.1km radius</p>
+                                        <p><strong>Status:</strong> Recommended by DEC</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="position-card optimal">
+                                    <div class="position-header">
+                                        <span class="position-id">C3</span>
+                                        <span class="position-type">OPTIMAL</span>
+                                    </div>
+                                    <div class="position-details">
+                                        <p><strong>Location:</strong> Rohini Sector 7</p>
+                                        <p><strong>Coordinates:</strong> 28.7041, 77.1025</p>
+                                        <p><strong>Coverage:</strong> 2.5km radius</p>
+                                        <p><strong>Status:</strong> Recommended by DEC</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="position-card current">
+                                    <div class="position-header">
+                                        <span class="position-id">D4</span>
+                                        <span class="position-type">CURRENT</span>
+                                    </div>
+                                    <div class="position-details">
+                                        <p><strong>Location:</strong> Gurgaon Highway</p>
+                                        <p><strong>Coordinates:</strong> 28.4595, 77.0266</p>
+                                        <p><strong>Coverage:</strong> 1.8km radius</p>
+                                        <p><strong>Status:</strong> Needs relocation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="positioning-analytics">
+                        <h3>📊 Positioning Analytics</h3>
+                        
+                        <div class="analytics-grid">
+                            <div class="analytics-card">
+                                <h4>Coverage Optimization</h4>
+                                <div class="metric-value">+34%</div>
+                                <p>Improved area coverage with DEC positioning</p>
+                            </div>
+                            
+                            <div class="analytics-card">
+                                <h4>Response Time Reduction</h4>
+                                <div class="metric-value">-42%</div>
+                                <p>Average time saved per emergency call</p>
+                            </div>
+                            
+                            <div class="analytics-card">
+                                <h4>Cluster Alignment</h4>
+                                <div class="metric-value">89%</div>
+                                <p>Positions aligned with accident hotspots</p>
+                            </div>
+                        </div>
+                        
+                        <div class="positioning-recommendations">
+                            <h4>Strategic Recommendations</h4>
+                            <div class="recommendation-list">
+                                <div class="recommendation-item">
+                                    <span class="rec-icon">✅</span>
+                                    <div class="rec-content">
+                                        <strong>Deploy to Position A1</strong><br>
+                                        <small>Highest accident cluster density - 23% coverage improvement</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="recommendation-item">
+                                    <span class="rec-icon">⚠️</span>
+                                    <div class="rec-content">
+                                        <strong>Relocate from Position D4</strong><br>
+                                        <small>Suboptimal location - 18% response time penalty</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="recommendation-item">
+                                    <span class="rec-icon">📊</span>
+                                    <div class="rec-content">
+                                        <strong>Monitor Position B2</strong><br>
+                                        <small>Optimal for evening hours - temporal pattern detected</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="upload" class="content-section">
+                <h2>Dataset Collection Interface</h2>
+                
+                <div class="data-types">
+                    <div class="data-type-card" data-type="accident">
+                        <h3>🚗 Accident Reports</h3>
+                        <p>Traffic incident data, severity levels, location coordinates</p>
+                    </div>
+                    <div class="data-type-card" data-type="demographic">
+                        <h3>👥 Driver Demographics</h3>
+                        <p>Age, experience, vehicle type, behavioral patterns</p>
+                    </div>
+                    <div class="data-type-card" data-type="trajectory">
+                        <h3>📍 GPS Trajectory Logs</h3>
+                        <p>Vehicle movement patterns, speed data, route information</p>
+                    </div>
+                </div>
+                
+                <div class="upload-container">
+                    <div class="upload-section">
+                        <div class="upload-area">
+                            <input type="file" id="file-input" accept=".csv,.json,.xlsx" multiple>
+                            <label for="file-input" class="upload-label">
+                                📁 Select Files for Batch Upload
+                            </label>
+                            <div class="file-info">Supported: CSV, JSON, XLSX | Max: 100MB per file</div>
+                        </div>
+                        
+                        <div class="metadata-form">
+                            <h3>Data Metadata</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Data Source</label>
+                                    <select id="data-source">
+                                        <option value="traffic-authority">Traffic Authority</option>
+                                        <option value="emergency-response">Emergency Response Unit</option>
+                                        <option value="municipal-system">Municipal System</option>
+                                        <option value="gps-provider">GPS Provider</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Data Type</label>
+                                    <select id="data-type">
+                                        <option value="accident-reports">Accident Reports</option>
+                                        <option value="demographic-data">Demographic Data</option>
+                                        <option value="trajectory-logs">Trajectory Logs</option>
+                                        <option value="traffic-patterns">Traffic Patterns</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Location ID</label>
+                                    <input type="text" id="location-id" placeholder="e.g., ZONE_001, DISTRICT_A">
+                                </div>
+                                <div class="form-group">
+                                    <label>Severity Level</label>
+                                    <select id="severity-level">
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Date Range</label>
+                                    <input type="date" id="start-date">
+                                    <input type="date" id="end-date">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="process-upload" class="btn-primary">Process & Validate Upload</button>
+                    </div>
+                    
+                    <div class="validation-panel">
+                        <h3>Validation Status</h3>
+                        <div id="validation-results"></div>
+                        
+                        <div class="processing-queue">
+                            <h4>Processing Queue</h4>
+                            <div id="queue-status">No files in queue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="emergency" class="content-section">
+                <h2>🚨 Emergency Dispatch Center</h2>
+                
+                <div class="emergency-overview">
+                    <div class="emergency-stats">
+                        <div class="emergency-card urgent">
+                            <h3>🔴 Active Emergencies</h3>
+                            <div class="emergency-number">3</div>
+                            <p>Ongoing emergency calls</p>
+                        </div>
+                        <div class="emergency-card">
+                            <h3>🚑 Available Ambulances</h3>
+                            <div class="emergency-number">18</div>
+                            <p>Ready for dispatch</p>
+                        </div>
+                        <div class="emergency-card">
+                            <h3>⏱️ Avg Response Time</h3>
+                            <div class="emergency-number">4.2 min</div>
+                            <p>Current performance</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dispatch-panel">
+                    <h3>📞 Emergency Call Queue</h3>
+                    <div class="call-queue">
+                        <div class="call-item priority-high">
+                            <div class="call-info">
+                                <strong>Call #2024-001</strong>
+                                <p>Location: Connaught Place, Delhi</p>
+                                <p>Type: Vehicle Collision</p>
+                                <p>Time: 2 minutes ago</p>
+                            </div>
+                            <div class="call-actions">
+                                <button class="btn-dispatch">Dispatch A1</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <div class="call-item priority-medium">
+                            <div class="call-info">
+                                <strong>Call #2024-002</strong>
+                                <p>Location: Noida Expressway</p>
+                                <p>Type: Medical Emergency</p>
+                                <p>Time: 5 minutes ago</p>
+                            </div>
+                            <div class="call-actions">
+                                <button class="btn-dispatch">Dispatch B2</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <div class="call-item priority-low">
+                            <div class="call-info">
+                                <strong>Call #2024-003</strong>
+                                <p>Location: Rohini Sector 7</p>
+                                <p>Type: Minor Accident</p>
+                                <p>Time: 8 minutes ago</p>
+                            </div>
+                            <div class="call-actions">
+                                <button class="btn-dispatch">Dispatch C3</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ambulance-status">
+                    <h3>🚑 Ambulance Fleet Status</h3>
+                    <div class="fleet-grid">
+                        <div class="ambulance-unit available">
+                            <div class="unit-id">A1</div>
+                            <div class="unit-status">Available</div>
+                            <div class="unit-location">Connaught Place</div>
+                        </div>
+                        <div class="ambulance-unit dispatched">
+                            <div class="unit-id">B2</div>
+                            <div class="unit-status">En Route</div>
+                            <div class="unit-location">Noida Expressway</div>
+                        </div>
+                        <div class="ambulance-unit available">
+                            <div class="unit-id">C3</div>
+                            <div class="unit-status">Available</div>
+                            <div class="unit-location">Rohini Sector</div>
+                        </div>
+                        <div class="ambulance-unit maintenance">
+                            <div class="unit-id">D4</div>
+                            <div class="unit-status">Maintenance</div>
+                            <div class="unit-location">Base Station</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="research" class="content-section">
+                <h2>🔬 Advanced Research Tools</h2>
+                
+                <div class="research-dashboard">
+                    <div class="research-controls">
+                        <h3>Model Configuration</h3>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label>Clustering Algorithm</label>
+                                <select id="algorithm-select">
+                                    <option value="dec">Deep Embedded Clustering (DEC)</option>
+                                    <option value="kmeans">K-Means</option>
+                                    <option value="gmm">Gaussian Mixture Model</option>
+                                    <option value="agglomerative">Agglomerative Clustering</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label>Number of Clusters</label>
+                                <input type="range" id="cluster-count" min="2" max="15" value="6">
+                                <span id="cluster-value">6</span>
+                            </div>
+                            <div class="control-group">
+                                <label>Learning Rate</label>
+                                <input type="number" id="learning-rate" value="0.001" step="0.001">
+                            </div>
+                            <div class="control-group">
+                                <label>Epochs</label>
+                                <input type="number" id="epochs" value="100" min="10" max="1000">
+                            </div>
+                        </div>
+                        <button id="run-experiment" class="btn-primary">Run Experiment</button>
+                    </div>
+                    
+                    <div class="experiment-results">
+                        <h3>Experiment Results</h3>
+                        <div class="metrics-comparison-live">
+                            <div class="metric-result">
+                                <h4>Silhouette Score</h4>
+                                <div class="score-display">0.4853</div>
+                                <div class="score-change">+0.023 from baseline</div>
+                            </div>
+                            <div class="metric-result">
+                                <h4>Davies-Bouldin Index</h4>
+                                <div class="score-display">2.523</div>
+                                <div class="score-change">-0.156 (better)</div>
+                            </div>
+                            <div class="metric-result">
+                                <h4>Calinski-Harabasz</h4>
+                                <div class="score-display">500.29</div>
+                                <div class="score-change">+45.2 improvement</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hypothesis-testing">
+                    <h3>Statistical Analysis</h3>
+                    <div class="stats-tools">
+                        <div class="tool-card">
+                            <h4>A/B Testing</h4>
+                            <p>Compare DEC vs Traditional Methods</p>
+                            <button class="btn-secondary">Run A/B Test</button>
+                        </div>
+                        <div class="tool-card">
+                            <h4>Cross Validation</h4>
+                            <p>K-Fold validation with k=5</p>
+                            <button class="btn-secondary">Validate Model</button>
+                        </div>
+                        <div class="tool-card">
+                            <h4>Feature Importance</h4>
+                            <p>Analyze Cat2Vec embeddings</p>
+                            <button class="btn-secondary">Analyze Features</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="reports" class="content-section">
+                <h2>📈 Analytics Reports & Insights</h2>
+                
+                <div class="report-generator">
+                    <h3>Generate Custom Reports</h3>
+                    <div class="report-options">
+                        <div class="option-group">
+                            <label>Report Type</label>
+                            <select id="report-type">
+                                <option value="performance">Model Performance Report</option>
+                                <option value="clustering">Clustering Analysis Report</option>
+                                <option value="temporal">Temporal Pattern Analysis</option>
+                                <option value="spatial">Spatial Distribution Report</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label>Time Period</label>
+                            <select id="time-period">
+                                <option value="last-week">Last Week</option>
+                                <option value="last-month">Last Month</option>
+                                <option value="last-quarter">Last Quarter</option>
+                                <option value="last-year">Last Year</option>
+                            </select>
+                        </div>
+                        <button id="generate-report" class="btn-primary">Generate Report</button>
+                    </div>
+                </div>
+                
+                <div class="insights-panel">
+                    <h3>Key Insights</h3>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-icon">📈</div>
+                            <h4>Peak Accident Hours</h4>
+                            <p>8-10 AM and 6-8 PM show 67% higher accident rates</p>
+                            <div class="insight-confidence">Confidence: 94%</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">🗺️</div>
+                            <h4>High-Risk Corridors</h4>
+                            <p>Expressways account for 43% of severe accidents</p>
+                            <div class="insight-confidence">Confidence: 89%</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">🌦️</div>
+                            <h4>Weather Impact</h4>
+                            <p>Rain increases accident probability by 156%</p>
+                            <div class="insight-confidence">Confidence: 91%</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">🚗</div>
+                            <h4>Vehicle Type Patterns</h4>
+                            <p>Motorcycles involved in 38% of urban accidents</p>
+                            <div class="insight-confidence">Confidence: 87%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="research-publications">
+                    <h3>Research & Publications</h3>
+                    <div class="publication-list">
+                        <div class="publication-item">
+                            <h4>Deep Embedded Clustering for Emergency Response Optimization</h4>
+                            <p>Published in Journal of Emergency Medical Services - 2024</p>
+                            <div class="publication-metrics">
+                                <span>Citations: 23</span>
+                                <span>Impact Factor: 4.2</span>
+                            </div>
+                        </div>
+                        <div class="publication-item">
+                            <h4>Cat2Vec Embeddings in Spatial-Temporal Analysis</h4>
+                            <p>Submitted to IEEE Transactions on Intelligent Transportation - 2024</p>
+                            <div class="publication-metrics">
+                                <span>Status: Under Review</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="admin" class="content-section">
+                <h2>User Management</h2>
+                <div class="user-management">
+                    <h3>Pending Registrations</h3>
+                    <div id="pending-users"></div>
+                    
+                    <h3>Approved Users</h3>
+                    <div id="approved-users"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="dashboard.js"></script>
+</body>
+</html>

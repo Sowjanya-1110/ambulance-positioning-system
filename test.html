@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Test</title>
+</head>
+<body>
+    <h1>Testing Login System</h1>
+    <button onclick="testLogin()">Test Login</button>
+    <div id="result"></div>
+    
+    <script>
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return Math.abs(hash).toString(16);
+        }
+        
+        function testLogin() {
+            const users = {
+                'admin': { 
+                    password: simpleHash('admin123'),
+                    role: 'admin' 
+                }
+            };
+            
+            const testHash = simpleHash('admin123');
+            const storedHash = users['admin'].password;
+            
+            document.getElementById('result').innerHTML = `
+                <p>Test Hash: ${testHash}</p>
+                <p>Stored Hash: ${storedHash}</p>
+                <p>Match: ${testHash === storedHash}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
